@@ -7,6 +7,8 @@ alias dfh='df -h'
 alias duh='du -h --max-depth=1'
 alias freeh='free -h'
 alias crd='composer run dev'
+alias llog='less "storage/logs/laravel-$(date +%F).log"'
+alias ltail='tail -f "storage/logs/laravel-$(date +%F).log"'
 alias casa='cd /etc/apache2/sites-available'
 alias cnsa='cd /etc/nginx/sites-available'
 

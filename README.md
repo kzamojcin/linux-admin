@@ -104,6 +104,8 @@ skryptów ani poleceń `ssh serwer komenda`. `sudo -i` uruchamia konfigurację r
 | `acc` | `php artisan config:clear` |
 | `acache` | `php artisan config:cache` |
 | `crd` | `composer run dev` dla projektów ze skryptem `dev` |
+| `llog` | `less "storage/logs/laravel-$(date +%F).log"` |
+| `ltail` | `tail -f "storage/logs/laravel-$(date +%F).log"` |
 | `casa` | Przejście do `/etc/apache2/sites-available` |
 | `cnsa` | Przejście do `/etc/nginx/sites-available` |
 | `tabname "Serwer testowy"` | Zmiana tytułu karty, jeśli terminal obsługuje OSC 1 |
@@ -124,6 +126,11 @@ Komendy Artisan wymagają PHP CLI i uruchomienia z katalogu zawierającego plik
 dane domyślnego cache aplikacji, nie tylko cache konfiguracji. Do samej konfiguracji
 służy `acc`. Komendy te są uruchamiane wyłącznie na żądanie, nigdy przy logowaniu.
 `casa` i `cnsa` nie instalują serwerów WWW; gdy katalogu brakuje, `cd` zgłosi błąd.
+
+`llog` i `ltail` uruchamiaj z głównego katalogu aplikacji Laravel korzystającej
+z dziennych plików logów. Data jest wyliczana przy każdym wywołaniu według czasu
+serwera. Wyjście z `less`: `q`; zakończenie `tail -f`: Ctrl+C. Po zmianie dnia
+uruchom `ltail` ponownie, aby śledzić nowy plik.
 
 ## Neovim
 

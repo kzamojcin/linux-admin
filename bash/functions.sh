@@ -101,6 +101,7 @@ ams               artisan migrate:status
 ao / aoc          artisan optimize / optimize:clear
 acc / acache      artisan config:clear / config:cache
 crd               composer run dev (jeśli projekt definiuje skrypt dev)
+llog / ltail      Dzisiejszy log Laravel: less / tail -f
 casa / cnsa       sites-available Apache / Nginx
 tabname TYTUŁ     Tytuł karty w terminalach obsługujących OSC 1
 mkcd KATALOG      Utworzenie katalogu i przejście do niego
