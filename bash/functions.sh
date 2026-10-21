@@ -6,6 +6,14 @@ artisan() {
     command php artisan "$@"
 }
 
+am() {
+    artisan migrate "$@"
+}
+
+amf() {
+    artisan migrate --force "$@"
+}
+
 ams() {
     artisan migrate:status "$@"
 }
@@ -90,16 +98,13 @@ dotfiles-update() {
 
 dotfiles-help() {
     cat <<'HELP'
+Bash:
 ll / la           Lista plików (szczegółowa / z ukrytymi)
 .. / ...          Przejście o jeden / dwa katalogi wyżej
 dfh / duh         Miejsce na dyskach / rozmiary katalogów
 freeh             Zużycie pamięci
 ports             Porty TCP/UDP nasłuchujące (wymaga ss)
 failed            Usługi w stanie failed (wymaga systemctl)
-artisan ...       php artisan ... (z katalogu aplikacji Laravel)
-ams               artisan migrate:status
-ao / aoc          artisan optimize / optimize:clear
-acc / acache      artisan config:clear / config:cache
 crd               composer run dev (jeśli projekt definiuje skrypt dev)
 llog / ltail      Dzisiejszy log Laravel: less / tail -f
 casa / cnsa       sites-available Apache / Nginx
@@ -109,5 +114,15 @@ jlog USŁUGA       Ostatnie 100 wpisów dziennika usługi
 jfollow USŁUGA    Podgląd dziennika na żywo; zakończenie: Ctrl+C
 dotfiles-update   Git pull --ff-only i wczytanie konfiguracji
 dotfiles-help     Ta lista
+
+Artisan (z katalogu aplikacji Laravel):
+artisan ...       php artisan ...
+am                php artisan migrate
+amf               php artisan migrate --force
+ams               php artisan migrate:status
+ao                php artisan optimize
+aoc               php artisan optimize:clear
+acc               php artisan config:clear
+acache            php artisan config:cache
 HELP
 }

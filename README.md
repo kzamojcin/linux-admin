@@ -98,6 +98,8 @@ skryptów ani poleceń `ssh serwer komenda`. `sudo -i` uruchamia konfigurację r
 | `ports` | Nasłuchujące porty TCP/UDP; wymaga `ss` |
 | `failed` | Usługi systemd w stanie failed |
 | `artisan ...` | `php artisan ...` z zachowaniem wszystkich argumentów |
+| `am` | `php artisan migrate` |
+| `amf` | `php artisan migrate --force` |
 | `ams` | `php artisan migrate:status` |
 | `ao` | `php artisan optimize` |
 | `aoc` | `php artisan optimize:clear` |
@@ -113,7 +115,7 @@ skryptów ani poleceń `ssh serwer komenda`. `sudo -i` uruchamia konfigurację r
 | `jlog ssh` | Ostatnie 100 wpisów dziennika usługi ssh |
 | `jfollow ssh` | Podgląd dziennika ssh na żywo; Ctrl+C kończy |
 | `dotfiles-update` | Pobranie zmian i ponowne wczytanie konfiguracji |
-| `dotfiles-help` | Skrócona pomoc |
+| `dotfiles-help` | Pomoc podzielona na sekcje Bash i Artisan |
 
 Dostęp do dziennika zależy od uprawnień użytkownika. Jeśli potrzebne są wyższe
 uprawnienia, użyj bezpośrednio np. `sudo journalctl -u ssh -n 100 --no-pager`.
@@ -121,7 +123,8 @@ Funkcja powłoki `jlog` nie jest programem dostępnym przez `sudo jlog`.
 
 Komendy Artisan wymagają PHP CLI i uruchomienia z katalogu zawierającego plik
 `artisan`. Skróty przekazują dodatkowe argumenty, np. `ams --database=pgsql`,
-`ao --help`. Nie dodają `sudo`, `--force` ani completion.
+`ao --help`. `amf` dodaje `--force`, pomijając potwierdzenie migracji w środowisku
+produkcyjnym. Pozostałe skróty nie dodają tej flagi. Nie dodają `sudo` ani completion.
 `aoc` wykonuje dokładnie `optimize:clear`: zależnie od wersji Laravela usuwa również
 dane domyślnego cache aplikacji, nie tylko cache konfiguracji. Do samej konfiguracji
 służy `acc`. Komendy te są uruchamiane wyłącznie na żądanie, nigdy przy logowaniu.

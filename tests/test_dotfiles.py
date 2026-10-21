@@ -68,7 +68,8 @@ class DotfilesTest(unittest.TestCase):
         php.chmod(0o755)
         self.env["PATH"] = str(binary) + os.pathsep + self.env["PATH"]
         (self.repo / "artisan").touch()
-        commands = {"artisan": [], "ams": ["migrate:status"], "ao": ["optimize"],
+        commands = {"artisan": [], "am": ["migrate"], "amf": ["migrate", "--force"],
+                    "ams": ["migrate:status"], "ao": ["optimize"],
                     "aoc": ["optimize:clear"], "acc": ["config:clear"], "acache": ["config:cache"]}
         for name, args in commands.items():
             with self.subTest(name=name):
