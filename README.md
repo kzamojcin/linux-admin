@@ -104,7 +104,7 @@ skryptów ani poleceń `ssh serwer komenda`. `sudo -i` uruchamia konfigurację r
 | `ao` | `php artisan optimize` |
 | `aoc` | `php artisan optimize:clear` |
 | `acc` | `php artisan config:clear` |
-| `acache` | `php artisan config:cache` |
+| `acch` | `php artisan config:cache` |
 | `crd` | `composer run dev` dla projektów ze skryptem `dev` |
 | `llog` | `less "storage/logs/laravel-$(date +%F).log"` |
 | `ltail` | `tail -f "storage/logs/laravel-$(date +%F).log"` |

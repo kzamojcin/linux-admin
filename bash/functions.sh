@@ -30,7 +30,7 @@ acc() {
     artisan config:clear "$@"
 }
 
-acache() {
+acch() {
     artisan config:cache "$@"
 }
 
@@ -123,6 +123,6 @@ ams               php artisan migrate:status
 ao                php artisan optimize
 aoc               php artisan optimize:clear
 acc               php artisan config:clear
-acache            php artisan config:cache
+acch              php artisan config:cache
 HELP
 }

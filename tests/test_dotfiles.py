@@ -70,7 +70,7 @@ class DotfilesTest(unittest.TestCase):
         (self.repo / "artisan").touch()
         commands = {"artisan": [], "am": ["migrate"], "amf": ["migrate", "--force"],
                     "ams": ["migrate:status"], "ao": ["optimize"],
-                    "aoc": ["optimize:clear"], "acc": ["config:clear"], "acache": ["config:cache"]}
+                    "aoc": ["optimize:clear"], "acc": ["config:clear"], "acch": ["config:cache"]}
         for name, args in commands.items():
             with self.subTest(name=name):
                 output = self.bash(f'{name} --help "argument ze spacjami"').stdout
