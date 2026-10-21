@@ -124,5 +124,13 @@ ao                php artisan optimize
 aoc               php artisan optimize:clear
 acc               php artisan config:clear
 acch              php artisan config:cache
+
+Node / npm / Nuxt (z katalogu projektu):
+nci               npm ci — instalacja zgodnie z lockfile
+ncib              npm ci --include=dev — zależności do budowania
+nb                npm run build
+ngen              npm run generate — generowanie strony statycznej
+nr                npm run — lista skryptów; nr NAZWA uruchamia skrypt
+nls               npm ls --depth=0 — bezpośrednie zależności
 HELP
 }

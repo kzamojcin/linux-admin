@@ -115,7 +115,7 @@ skryptów ani poleceń `ssh serwer komenda`. `sudo -i` uruchamia konfigurację r
 | `jlog ssh` | Ostatnie 100 wpisów dziennika usługi ssh |
 | `jfollow ssh` | Podgląd dziennika ssh na żywo; Ctrl+C kończy |
 | `dotfiles-update` | Pobranie zmian i ponowne wczytanie konfiguracji |
-| `dotfiles-help` | Pomoc podzielona na sekcje Bash i Artisan |
+| `dotfiles-help` | Pomoc podzielona na sekcje Bash, Artisan i Node / npm / Nuxt |
 
 Dostęp do dziennika zależy od uprawnień użytkownika. Jeśli potrzebne są wyższe
 uprawnienia, użyj bezpośrednio np. `sudo journalctl -u ssh -n 100 --no-pager`.
@@ -134,6 +134,33 @@ służy `acc`. Komendy te są uruchamiane wyłącznie na żądanie, nigdy przy l
 z dziennych plików logów. Data jest wyliczana przy każdym wywołaniu według czasu
 serwera. Wyjście z `less`: `q`; zakończenie `tail -f`: Ctrl+C. Po zmianie dnia
 uruchom `ltail` ponownie, aby śledzić nowy plik.
+
+### Node / npm / Nuxt
+
+Uruchamiaj z katalogu projektu zawierającego `package.json`. Wymagane są Node.js
+i npm; instalatory dotfiles nie instalują tych narzędzi.
+
+| Skrót | Komenda | Zastosowanie |
+| --- | --- | --- |
+| `nci` | `npm ci` | Instalacja zależności zgodnie z lockfile |
+| `ncib` | `npm ci --include=dev` | Instalacja także zależności potrzebnych do budowania |
+| `nb` | `npm run build` | Build aplikacji |
+| `ngen` | `npm run generate` | Generowanie statycznej strony |
+| `nr` | `npm run` | Lista skryptów; `nr NAZWA` uruchamia wskazany skrypt |
+| `nls` | `npm ls --depth=0` | Lista bezpośrednich zależności i ich wersji |
+
+`npm ci` wymaga zgodnego lockfile i odtwarza `node_modules`. Jeśli budujesz na
+serwerze z `NODE_ENV=production`, użyj `ncib`, aby uwzględnić `devDependencies`.
+`nb` i `ngen` wymagają odpowiednich skryptów w `package.json`.
+
+Dla Nuxta 3/4 ze standardowymi skryptami:
+
+- SSR na Node: `ncib && nb`, następnie restart właściwej usługi aplikacji.
+- Strona statyczna: `ncib && ngen`, następnie publikacja `.output/public`.
+
+To dwa warianty wdrożenia; zwykle wybierasz jeden. Aliasy nie publikują plików
+ani nie restartują usług. Dodatkowe argumenty skryptów przekazuj przez `--`,
+np. `nb -- --help`.
 
 ## Neovim
 
