@@ -16,7 +16,7 @@ rc_file="$HOME/.bashrc"
 begin_marker='# >>> linux-admin dotfiles >>>'
 end_marker='# <<< linux-admin dotfiles <<<'
 
-for file in init.sh aliases.sh functions.sh; do
+for file in init.sh aliases.sh functions.sh completions.sh; do
     bash -n "$repo_dir/bash/$file"
 done
 

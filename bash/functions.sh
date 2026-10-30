@@ -86,7 +86,7 @@ dotfiles-update() {
     command git -C "$repo" rev-parse --verify '@{upstream}' >/dev/null || return
     command git -C "$repo" pull --ff-only || return
 
-    for file in init.sh aliases.sh functions.sh; do
+    for file in init.sh aliases.sh functions.sh completions.sh; do
         if ! command bash -n "$repo/bash/$file"; then
             printf 'Pliki pobrano, ale nie wczytano konfiguracji: błąd składni w %s.\n' "$file" >&2
             return 1
@@ -105,6 +105,7 @@ dfh / duh         Miejsce na dyskach / rozmiary katalogów
 freeh             Zużycie pamięci
 ports             Porty TCP/UDP nasłuchujące (wymaga ss)
 failed            Usługi w stanie failed (wymaga systemctl)
+tmux ... -t TAB   Uzupełnianie nazw sesji (jeśli tmux jest zainstalowany)
 crd               composer run dev (jeśli projekt definiuje skrypt dev)
 llog / ltail      Dzisiejszy log Laravel: less / tail -f
 casa / cnsa       sites-available Apache / Nginx

@@ -91,6 +91,64 @@ class DotfilesTest(unittest.TestCase):
         output = self.bash('source "$1/bash/init.sh"; printf "%s" "$PATH"').stdout
         self.assertEqual(output.split(os.pathsep).count(str(local_bin)), 1)
 
+    def test_tmux_completion_without_tmux(self):
+        empty_bin = self.base / "empty-bin"
+        empty_bin.mkdir()
+        result = self.run_cmd(["bash", "--noprofile", "--norc", "-c", '''
+            set -e
+            PATH="$2"
+            source "$1/bash/completions.sh"
+            if complete -p tmux >/dev/null 2>&1; then exit 1; fi
+            COMP_WORDS=(tmux attach -t '')
+            COMP_CWORD=3
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 0 ]]
+        ''', "test", str(self.repo), str(empty_bin)])
+        self.assertEqual(result.stdout + result.stderr, "")
+
+    def test_tmux_completion_sessions_and_unavailable_server(self):
+        binary = self.base / "bin"
+        binary.mkdir()
+        tmux = binary / "tmux"
+        tmux.write_text('''#!/bin/sh
+if [ "$1" != list-sessions ] || [ "$2" != -F ] || [ "$3" != '#S' ]; then exit 2; fi
+if [ "${TMUX_TEST_DOWN:-0}" = 1 ]; then
+    printf 'no server running\\n' >&2
+    exit 1
+fi
+printf '%s\\n' 'prod api' 'prod-worker' 'test' 'prod*literal'
+''')
+        tmux.chmod(0o755)
+        result = self.run_cmd(["bash", "--noprofile", "--norc", "-c", '''
+            set -e
+            PATH="$2"
+            source "$1/bash/completions.sh"
+            [[ $(complete -p tmux) == *'_dotfiles_tmux_complete tmux' ]]
+            COMP_WORDS=(tmux attach -t prod)
+            COMP_CWORD=3
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 3 && ${COMPREPLY[0]} == 'prod api' && ${COMPREPLY[1]} == prod-worker ]]
+            COMP_WORDS[3]='prod*'
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 1 && ${COMPREPLY[0]} == 'prod*literal' ]]
+            COMP_WORDS[3]='missing'
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 0 ]]
+            COMP_WORDS=(tmux attach '')
+            COMP_CWORD=2
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 0 ]]
+            export TMUX_TEST_DOWN=1
+            COMP_WORDS=(tmux attach -t '')
+            COMP_CWORD=3
+            _dotfiles_tmux_complete
+            [[ ${#COMPREPLY[@]} == 0 ]]
+            complete -W existing-completion tmux
+            source "$1/bash/completions.sh"
+            [[ $(complete -p tmux) == *existing-completion* ]]
+        ''', "test", str(self.repo), str(binary)])
+        self.assertEqual(result.stdout + result.stderr, "")
+
     def test_nvim_backup_and_idempotency(self):
         self.config.mkdir(parents=True)
         (self.config / "init.lua").write_text("-- original lua\n")

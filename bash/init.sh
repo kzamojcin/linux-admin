@@ -8,6 +8,7 @@ _DOTFILES_DIR="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)
 
 source "$_DOTFILES_DIR/bash/aliases.sh"
 source "$_DOTFILES_DIR/bash/functions.sh"
+source "$_DOTFILES_DIR/bash/completions.sh"
 
 # Przenośne ustawienia z konfiguracji użytkownika.
 HISTCONTROL=ignoredups

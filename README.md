@@ -135,6 +135,23 @@ z dziennych plików logów. Data jest wyliczana przy każdym wywołaniu według 
 serwera. Wyjście z `less`: `q`; zakończenie `tail -f`: Ctrl+C. Po zmianie dnia
 uruchom `ltail` ponownie, aby śledzić nowy plik.
 
+### Completion tmux
+
+Po wpisaniu `tmux attach -t ` naciśnij Tab, aby uzupełnić nazwę istniejącej sesji.
+Możesz podać początek nazwy, np. `tmux attach -t prod`, i nacisnąć Tab.
+Ta prosta wersja podpowiada nazwy sesji po osobnym argumencie `-t`;
+nie uzupełnia podkomend, okien ani paneli.
+
+- Nie wymaga pakietu `bash-completion`: używa wbudowanego `complete` Basha.
+- Bez zainstalowanego `tmux` rejestracja jest pomijana, bez komunikatów błędów.
+- Bez uruchomionego serwera tmux lub sesji lista podpowiedzi jest pusta.
+- Nazwy sesji ze spacjami pozostają pojedynczymi podpowiedziami.
+- Nie zastępuje completion dla `tmux`, jeśli inne jest już zarejestrowane.
+
+Listę sesji pobiera dopiero po naciśnięciu Tab, nie przy logowaniu. Po instalacji
+tmuxa w już otwartej sesji wykonaj `source ~/.bashrc`. Implementacja nie używa
+`mapfile`, dzięki czemu działa także w Bash 3.2 dostarczanym z macOS.
+
 ### Node / npm / Nuxt
 
 Uruchamiaj z katalogu projektu zawierającego `package.json`. Wymagane są Node.js
@@ -228,7 +245,7 @@ dotfiles-update
 Komenda wymaga klonu Git z aktywną gałęzią śledzącą upstream. Przerywa pracę przy
 lokalnych zmianach, również nieśledzonych plikach. Używa `git pull --ff-only`:
 nie tworzy merge commitów, nie wykonuje resetu ani stasha. Następnie sprawdza
-składnię trzech plików Bash i wczytuje konfigurację w bieżącej powłoce.
+składnię czterech plików Bash i wczytuje konfigurację w bieżącej powłoce.
 Jeśli pobrana konfiguracja ma błąd składni, pozostaje na dysku, ale nie jest wczytywana
 przez tę komendę; popraw ją przed otwarciem następnej sesji. Sprawdzenie składni
 nie zastępuje przeglądu zmian, ponieważ konfiguracja Bash jest wykonywalnym kodem.
